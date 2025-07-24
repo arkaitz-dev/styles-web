@@ -7,6 +7,25 @@
    CSS Custom Properties & Design Tokens
    ============================================== */
 
+/* Skip to main content link for screen readers */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  padding: var(--space-2) var(--space-4);
+  text-decoration: none;
+  border-radius: 0 0 var(--radius-base) 0;
+  z-index: var(--z-tooltip);
+  font-weight: var(--font-weight-semibold);
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 /* Base spacing scale (8px base) */
 :root {
   /* Spacing scale */
@@ -125,8 +144,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  /* Add padding bottom to prevent content from being hidden under fixed footer */
-  padding-bottom: calc(var(--font-size-sm) * var(--line-height-base) * 0.831 + var(--space-4));
+  /* Remove fixed footer padding - footer is now relative */
+  padding-bottom: 0;
 }
 
 /* ==============================================
@@ -149,6 +168,15 @@ body {
 button:focus-visible,
 a:focus-visible {
   outline-offset: var(--focus-outline-offset);
+}
+
+/* Loading indicator for screen readers */
+.loading-announcement {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 /* ==============================================
@@ -227,8 +255,11 @@ a:hover {
   text-decoration-color: var(--color-link-underline);
 }
 
-.link-underline:hover {
-  text-decoration-color: var(--color-link);
+/* Only apply hover on devices that actually support hover (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  .link-underline:hover {
+    text-decoration-color: var(--color-link);
+  }
 }
 
 /* ==============================================
@@ -374,8 +405,8 @@ nav {
 
 /* Theme toggle button */
 .theme-toggle {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -385,6 +416,16 @@ nav {
   color: var(--color-text-secondary);
   cursor: pointer;
   transition: all var(--transition-fast);
+  position: relative;
+  /* Add ARIA label support */
+  font-size: 0;
+}
+
+.theme-toggle::after {
+  content: attr(aria-label);
+  position: absolute;
+  font-size: 1px;
+  color: transparent;
 }
 
 /* Only apply hover on devices that actually support hover (not touch) */
@@ -408,8 +449,8 @@ nav {
 /* Mobile menu button */
 .mobile-menu-toggle {
   display: none;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -419,6 +460,16 @@ nav {
   border-radius: var(--radius-base);
   cursor: pointer;
   transition: all var(--transition-fast);
+  position: relative;
+  /* Add ARIA label support */
+  font-size: 0;
+}
+
+.mobile-menu-toggle::after {
+  content: attr(aria-label);
+  position: absolute;
+  font-size: 1px;
+  color: transparent;
 }
 
 /* Only apply hover on devices that actually support hover (not touch) */
@@ -506,9 +557,12 @@ nav {
   transition: all var(--transition-base);
 }
 
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px var(--color-shadow-lg);
+/* Only apply hover on devices that actually support hover (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--color-shadow-lg);
+  }
 }
 
 /* ==============================================
@@ -585,11 +639,29 @@ nav {
   border-color: var(--color-accent);
 }
 
-.btn-primary:hover {
-  background-color: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px var(--color-accent-shadow);
+/* Only apply hover on devices that actually support hover (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    background-color: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--color-accent-shadow);
+  }
+}
+
+/* Touch-friendly active state */
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px var(--color-accent-shadow);
+}
+
+/* Prevent sticky states on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .btn-primary:focus,
+  .btn-primary:active {
+    transform: none !important;
+    box-shadow: 0 4px 12px var(--color-accent-shadow) !important;
+  }
 }
 
 .btn-secondary {
@@ -598,9 +670,30 @@ nav {
   border-color: var(--color-accent);
 }
 
-.btn-secondary:hover {
+/* Only apply hover on devices that actually support hover (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  .btn-secondary:hover {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+  }
+}
+
+/* Touch-friendly active state */
+.btn-secondary:active {
   background-color: var(--color-accent);
   color: var(--color-bg-primary);
+  opacity: 0.9;
+}
+
+/* Prevent sticky states on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .btn-secondary:focus,
+  .btn-secondary:active {
+    background-color: var(--color-accent) !important;
+    color: var(--color-bg-primary) !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* ==============================================
@@ -634,20 +727,31 @@ nav {
   box-sizing: border-box;
 }
 
-.form-input:hover,
-.form-textarea:hover {
-  border-color: var(--color-border-hover);
-  background-color: var(--color-bg-input-focus);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px var(--color-shadow-sm);
+/* Only apply hover on devices that actually support hover (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  .form-input:hover,
+  .form-textarea:hover {
+    border-color: var(--color-border-hover);
+    background-color: var(--color-bg-input-focus);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--color-shadow-sm);
+  }
 }
 
 .form-input:focus,
 .form-textarea:focus {
+  outline: none;
   border-color: var(--color-accent);
   background-color: var(--color-bg-input-focus);
   transform: translateY(-1px);
   box-shadow: 0 0 0 3px var(--color-accent-light), 0 4px 12px var(--color-shadow-md);
+}
+
+/* Improved placeholder contrast */
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--color-text-tertiary);
+  opacity: 0.8;
 }
 
 .form-textarea {
@@ -673,9 +777,12 @@ nav {
   transition: all var(--transition-base);
 }
 
-.skill-category:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px var(--color-shadow-md);
+/* Only apply hover on devices that actually support hover (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  .skill-category:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--color-shadow-md);
+  }
 }
 
 .skill-category-title {
@@ -781,8 +888,11 @@ nav {
   transition: all var(--transition-base);
 }
 
-.timeline-content:hover {
-  box-shadow: 0 4px 12px var(--color-shadow-md);
+/* Only apply hover on devices that actually support hover (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  .timeline-content:hover {
+    box-shadow: 0 4px 12px var(--color-shadow-md);
+  }
 }
 
 .timeline-date {
@@ -848,9 +958,12 @@ nav {
   flex-direction: column;
 }
 
-.project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px var(--color-shadow-lg);
+/* Only apply hover on devices that actually support hover (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px var(--color-shadow-lg);
+  }
 }
 
 .project-image {
@@ -912,8 +1025,11 @@ nav {
   gap: var(--space-1);
 }
 
-.project-link:hover {
-  text-decoration: underline;
+/* Only apply hover on devices that actually support hover (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  .project-link:hover {
+    text-decoration: underline;
+  }
 }
 
 /* ==============================================
@@ -1003,12 +1119,15 @@ nav {
   padding-top: var(--space-4);
 }
 
-.contact-form .form-group input:hover,
-.contact-form .form-group textarea:hover {
-  border-color: var(--color-border-hover);
-  background-color: var(--color-bg-input-focus);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px var(--color-shadow-sm);
+/* Only apply hover on devices that actually support hover (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  .contact-form .form-group input:hover,
+  .contact-form .form-group textarea:hover {
+    border-color: var(--color-border-hover);
+    background-color: var(--color-bg-input-focus);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--color-shadow-sm);
+  }
 }
 
 .contact-form .form-group input:focus,
@@ -1054,13 +1173,16 @@ nav {
   transition: left 0.5s ease;
 }
 
-.contact-form .cta-button:hover::before {
-  left: 100%;
-}
+/* Only apply hover on devices that actually support hover (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  .contact-form .cta-button:hover::before {
+    left: 100%;
+  }
 
-.contact-form .cta-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px var(--color-accent-shadow), 0 4px 8px var(--color-shadow-md);
+  .contact-form .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--color-accent-shadow), 0 4px 8px var(--color-shadow-md);
+  }
 }
 
 .contact-form .cta-button:active {
@@ -1135,22 +1257,14 @@ nav {
    ============================================== */
 
 footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
+  position: relative;
   background-color: var(--color-bg-footer);
   color: var(--color-text-footer);
-  padding: var(--space-1) var(--space-4);
+  padding: var(--space-4) var(--space-4);
   text-align: center;
-  font-size: var(--font-size-sm); /* Small but readable - 0.9rem */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(var(--font-size-sm) * var(--line-height-base) * 0.831); /* Reduced another 15% from 0.9775 to 0.831 */
-  backdrop-filter: blur(10px);
-  border-top: 1px solid var(--color-border-primary);
+  font-size: var(--font-size-sm);
+  margin-top: auto;
+  border-top: 1px solid var(--color-border);
 }
 
 footer .container {
@@ -1169,8 +1283,11 @@ footer a {
   font-weight: var(--font-weight-medium);
 }
 
-footer a:hover {
-  text-decoration: underline;
+/* Only apply hover on devices that actually support hover (not touch) */
+@media (hover: hover) and (pointer: fine) {
+  footer a:hover {
+    text-decoration: underline;
+  }
 }
 
 /* ==============================================
@@ -1190,6 +1307,10 @@ footer a:hover {
   opacity: 1;
 }
 
+.htmx-request [aria-live="polite"] {
+  content: "Loading content";
+}
+
 .loading-spinner {
   width: 24px;
   height: 24px;
@@ -1197,6 +1318,28 @@ footer a:hover {
   border-top-color: var(--color-spinner);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
+}
+
+/* Loading overlay for better UX */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-modal);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.loading-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ==============================================
@@ -1274,17 +1417,17 @@ footer a:hover {
   }
   
   /* Ensure list markers align with paragraphs in mobile */
-  ul:not(.nav-links) li {
+  ul:not(.nav-links):not(.skill-list):not(.timeline-list) li {
     margin-left: 0;
     padding-left: 1.5em;
   }
   
-  ul:not(.nav-links) li::marker {
+  ul:not(.nav-links):not(.skill-list):not(.timeline-list) li::marker {
     unicode-bidi: isolate;
   }
   
   /* Reset list style position for better alignment */
-  ul:not(.nav-links) {
+  ul:not(.nav-links):not(.skill-list):not(.timeline-list) {
     list-style-position: outside;
     padding-left: 1.5em;
   }
@@ -1354,6 +1497,7 @@ footer a:hover {
     transition: all var(--transition-base);
     min-height: 48px; /* Ensure minimum touch target size */
     position: relative; /* For active state positioning */
+    height: auto; /* Override desktop height constraint */
   }
   
   /* Mobile hover states are defined in theme files for consistency */
@@ -1401,7 +1545,8 @@ footer a:hover {
 
 @media (max-width: 480px) {
   :root {
-    --font-size-base: 1.03125rem; /* 16.5px - increased 10% from 15px */
+    --font-size-base: 1.0625rem; /* 17px - optimized for mobile readability */
+    --header-height: calc(3rem * 0.85); /* 2.55rem - smaller for mobile */
   }
   
   .hero-title {
@@ -1440,6 +1585,17 @@ footer a:hover {
   
   .contact-form .form-group textarea {
     min-height: 100px;
+  }
+  
+  /* Enhanced touch targets for mobile */
+  .nav-link {
+    min-height: 48px;
+  }
+  
+  .theme-toggle,
+  .mobile-menu-toggle {
+    min-width: 48px;
+    min-height: 48px;
   }
 }
 

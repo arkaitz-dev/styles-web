@@ -4,9 +4,9 @@
    =============================================== */
 
 :root {
-  /* Primary Colors - Electric Violet-Indigo Palette */
-  --color-brand: #6d28d9;           /* Violet 700 - vibrant electric purple */
-  --color-accent: #6d28d9;          /* Electric violet - 7.5:1 contrast (still AAA) */
+  /* Primary Colors - Electric Eclipse Unified Palette */
+  --color-brand: #6d28d9;           /* Violet 700 - unified with dark theme */
+  --color-accent: #6d28d9;          /* Electric violet - 7.5:1 contrast (AAA) */
   --color-accent-hover: #5b21b6;    /* Violet 800 - darker on hover */
   --color-accent-light: #ddd6fe;    /* Violet 200 - more visible light background */
   --color-accent-shadow: rgba(109, 40, 217, 0.20);
@@ -53,6 +53,7 @@
   --color-bg-input-focus: #faf9ff;  /* Slight violet tint on focus */
   --color-border: #ddd6fe;          /* Violet 200 - visible borders */
   --color-border-hover: #a78bfa;    /* Violet 400 - stronger on hover */
+  --color-border-primary: #c4b5fd;  /* Primary border color for header/footer */
   
   /* Focus Indicator - Maximum Visibility */
   --color-focus: #6d28d9;           /* Vibrant electric violet */
@@ -95,16 +96,17 @@
                    radial-gradient(at 0% 50%, rgba(139, 92, 246, 0.02) 0%, transparent 50%);
 }
 
-/* Enhanced Background with Vibrant Pattern */
+/* Enhanced Background with Electric Eclipse Pattern */
 body {
   /* Electric Eclipse: Balanced violet-tinted background */
-  background-color: #e9e3fe; /* Custom violet between 100 and 200 - perfect balance */
+  background-color: #f1f0ff; /* Softer custom violet for better readability */
   /* Subtle gradient overlay for depth */
   background-image: 
-    radial-gradient(at 20% 30%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
-    radial-gradient(at 80% 70%, rgba(167, 139, 250, 0.05) 0%, transparent 50%),
-    radial-gradient(at 40% 90%, rgba(196, 181, 253, 0.05) 0%, transparent 50%);
-  /* Removed position: relative to fix header/footer positioning */
+    radial-gradient(at 20% 30%, rgba(109, 40, 217, 0.03) 0%, transparent 60%),
+    radial-gradient(at 80% 70%, rgba(139, 92, 246, 0.02) 0%, transparent 60%),
+    radial-gradient(at 40% 90%, rgba(167, 139, 250, 0.02) 0%, transparent 60%);
+  /* Ensure smooth text rendering */
+  text-rendering: optimizeLegibility;
 }
 
 /* Enhanced Card Styling - Vibrant Light Theme */
@@ -212,7 +214,41 @@ code {
   border-color: var(--color-accent);
 }
 
-/* Contact form specific input focus for light theme */\n.contact-form .form-group input:focus,\n.contact-form .form-group textarea:focus {\n  box-shadow: \n    0 0 0 3px var(--color-accent-light),\n    0 4px 12px var(--color-shadow-md);\n  border-color: var(--color-accent);\n}\n\n/* Navigation Enhancements - Bold and Vibrant */
+/* Contact form specific input focus for light theme */
+.contact-form .form-group input:focus,
+.contact-form .form-group textarea:focus {
+  box-shadow: 
+    0 0 0 3px var(--color-accent-light),
+    0 4px 12px var(--color-shadow-md);
+  border-color: var(--color-accent);
+}
+
+/* Form placeholder styles for light theme - Enhanced accessibility */
+.contact-form .form-group input::placeholder,
+.contact-form .form-group textarea::placeholder {
+  color: #64748b; /* Slate 500 - 4.2:1 contrast ratio for better readability */
+  opacity: 1;
+}
+
+.form-input::-webkit-input-placeholder,
+.form-textarea::-webkit-input-placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+.form-input::-moz-placeholder,
+.form-textarea::-moz-placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+.form-input:-ms-input-placeholder,
+.form-textarea:-ms-input-placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+/* Navigation Enhancements - Bold and Vibrant */
 /* Enhanced active indicator with glow for light theme */
 .nav-link.active::after {
   box-shadow: 0 0 8px rgba(109, 40, 217, 0.5);
@@ -228,6 +264,14 @@ code {
       inset 0 -2px 0 rgba(109, 40, 217, 0.3);
     transform: translateY(-1px);
   }
+}
+
+/* Touch devices - ensure clean active state */
+.nav-link:active {
+  background-color: rgba(109, 40, 217, 0.05);
+  color: var(--color-accent);
+  transform: translateY(0);
+  transition: all 0.1s ease;
 }
 
 .nav-link:focus-visible {
@@ -359,10 +403,10 @@ code {
 header {
   background: var(--color-bg-header) !important;
   backdrop-filter: blur(12px);
-  border-bottom: 2px solid rgba(139, 92, 246, 0.2);
+  border-bottom: 1px solid var(--color-border-primary);
   box-shadow: 
-    0 4px 20px rgba(109, 40, 217, 0.08),
-    0 1px 3px rgba(109, 40, 217, 0.12);
+    0 2px 12px rgba(109, 40, 217, 0.08),
+    0 1px 3px rgba(109, 40, 217, 0.06);
 }
 
 /* Logo with Electric Personality */
@@ -386,10 +430,10 @@ header {
 /* Enhanced Footer - Bold and Colorful */
 footer {
   background: var(--color-bg-footer) !important;
-  border-top: 2px solid rgba(139, 92, 246, 0.2);
+  border-top: 1px solid var(--color-border-primary);
   box-shadow: 
-    0 -4px 20px rgba(109, 40, 217, 0.08),
-    0 -1px 3px rgba(109, 40, 217, 0.12);
+    0 -2px 12px rgba(109, 40, 217, 0.08),
+    0 -1px 3px rgba(109, 40, 217, 0.06);
 }
 
 footer a {
@@ -419,13 +463,19 @@ footer a:hover {
 /* Only apply hover on devices that actually support hover (not touch) */
 @media (hover: hover) and (pointer: fine) {
   .theme-toggle:hover {
-    background: rgba(139, 92, 246, 0.2);
-    border-color: var(--color-accent);
-    box-shadow: 
-      0 4px 12px rgba(109, 40, 217, 0.25),
-      0 0 20px rgba(109, 40, 217, 0.15);
-    transform: translateY(-1px) scale(1.05);
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow: 0 2px 8px rgba(109, 40, 217, 0.15);
+    transform: translateY(-1px);
   }
+}
+
+/* Touch devices - consistent active state */
+.theme-toggle:active {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(0) scale(0.98);
+  transition: all 0.1s ease;
 }
 
 .theme-toggle:focus-visible {
@@ -458,6 +508,14 @@ footer a:hover {
     border: 2px solid rgba(139, 92, 246, 0.3);
     box-shadow: 0 2px 8px rgba(109, 40, 217, 0.15);
   }
+}
+
+/* Touch devices - consistent active state */
+.mobile-menu-toggle:active {
+  background-color: rgba(139, 92, 246, 0.15);
+  border: 2px solid rgba(139, 92, 246, 0.4);
+  transform: scale(0.98);
+  transition: all 0.1s ease;
 }
 
 .mobile-menu-toggle:focus-visible {
@@ -521,14 +579,21 @@ footer a:hover {
   /* Only apply hover on devices that actually support hover (not touch) */
   @media (hover: hover) and (pointer: fine) {
     .nav-links .nav-link:hover {
-      background: rgba(255, 255, 255, 0.9);
-      border-color: var(--color-accent);
+      background: rgba(255, 255, 255, 0.7);
+      border-color: rgba(139, 92, 246, 0.3);
       color: var(--color-accent);
-      box-shadow: 
-        0 4px 12px rgba(109, 40, 217, 0.15),
-        inset 0 -2px 0 rgba(109, 40, 217, 0.3);
-      transform: translateX(4px);
+      box-shadow: 0 2px 8px rgba(109, 40, 217, 0.1);
+      transform: translateX(2px);
     }
+  }
+  
+  /* Touch devices - mobile menu active state */
+  .nav-links .nav-link:active {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(139, 92, 246, 0.3);
+    color: var(--color-accent);
+    transform: translateX(1px);
+    transition: all 0.1s ease;
   }
   
   /* Prevent sticky states on touch devices in mobile menu */
@@ -547,8 +612,8 @@ footer a:hover {
   .nav-links .nav-link.active {
     color: var(--color-accent);
     font-weight: 600;
-    background-color: rgba(139, 92, 246, 0.08); /* Slightly more visible for better contrast */
-    border-color: rgba(139, 92, 246, 0.25);
+    background-color: rgba(139, 92, 246, 0.12); /* Slightly more visible for better contrast */
+    border-color: rgba(139, 92, 246, 0.3);
     box-shadow: none;
   }
   
