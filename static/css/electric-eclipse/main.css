@@ -727,15 +727,13 @@ nav {
   box-sizing: border-box;
 }
 
-/* Only apply hover on devices that actually support hover (not touch) */
-@media (hover: hover) and (pointer: fine) {
-  .form-input:hover,
-  .form-textarea:hover {
-    border-color: var(--color-border-hover);
-    background-color: var(--color-bg-input-focus);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px var(--color-shadow-sm);
-  }
+/* Restore original basic-web hover styles for general form inputs */
+.form-input:hover,
+.form-textarea:hover {
+  border-color: var(--color-border-hover);
+  background-color: var(--color-bg-input-focus);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--color-shadow-sm);
 }
 
 .form-input:focus,
@@ -1119,15 +1117,13 @@ nav {
   padding-top: var(--space-4);
 }
 
-/* Only apply hover on devices that actually support hover (not touch) */
-@media (hover: hover) and (pointer: fine) {
-  .contact-form .form-group input:hover,
-  .contact-form .form-group textarea:hover {
-    border-color: var(--color-border-hover);
-    background-color: var(--color-bg-input-focus);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px var(--color-shadow-sm);
-  }
+/* Restore original basic-web hover styles for contact form inputs */
+.contact-form .form-group input:hover,
+.contact-form .form-group textarea:hover {
+  border-color: var(--color-border-hover);
+  background-color: var(--color-bg-input-focus);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--color-shadow-sm);
 }
 
 .contact-form .form-group input:focus,
@@ -1173,16 +1169,14 @@ nav {
   transition: left 0.5s ease;
 }
 
-/* Only apply hover on devices that actually support hover (not touch) */
-@media (hover: hover) and (pointer: fine) {
-  .contact-form .cta-button:hover::before {
-    left: 100%;
-  }
+/* Restore original basic-web hover styles for contact form button */
+.contact-form .cta-button:hover::before {
+  left: 100%;
+}
 
-  .contact-form .cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px var(--color-accent-shadow), 0 4px 8px var(--color-shadow-md);
-  }
+.contact-form .cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px var(--color-accent-shadow), 0 4px 8px var(--color-shadow-md);
 }
 
 .contact-form .cta-button:active {
