@@ -79,6 +79,16 @@
   --color-bg-tag: #c7b5fd;          /* Violet 300 - vibrant tag background */
   --color-text-tag: #4c1d95;        /* Violet 900 - maintains excellent contrast */
   
+  /* Button Variant Colors for Light Theme */
+  --color-btn-success: #22c55e;      /* Green 500 */
+  --color-btn-success-hover: #16a34a; /* Green 600 */
+  --color-btn-danger: #ef4444;       /* Red 500 */
+  --color-btn-danger-hover: #dc2626;  /* Red 600 */
+  --color-btn-warning: #f59e0b;      /* Amber 500 */
+  --color-btn-warning-hover: #d97706; /* Amber 600 */
+  --color-btn-info: #3b82f6;         /* Blue 500 */
+  --color-btn-info-hover: #2563eb;   /* Blue 600 */
+  
   /* Shadows - Electric Eclipse with bold violet presence */
   --color-shadow-sm: rgba(109, 40, 217, 0.10);
   --color-shadow-md: rgba(109, 40, 217, 0.18);

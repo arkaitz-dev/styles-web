@@ -81,6 +81,16 @@
   --color-bg-tag: rgba(129, 140, 248, 0.2); /* Transparent indigo */
   --color-text-tag: #c7d2fe;        /* Indigo 200 - 8.3:1 contrast */
   
+  /* Button Variant Colors for Dark Theme - optimized for dark backgrounds */
+  --color-btn-success: #10b981;      /* Green 500 - better for dark */
+  --color-btn-success-hover: #059669; /* Green 600 */
+  --color-btn-danger: #f87171;       /* Red 400 - better for dark */
+  --color-btn-danger-hover: #ef4444;  /* Red 500 */
+  --color-btn-warning: #fbbf24;      /* Amber 400 - better for dark */
+  --color-btn-warning-hover: #f59e0b; /* Amber 500 */
+  --color-btn-info: #60a5fa;         /* Blue 400 - better for dark */
+  --color-btn-info-hover: #3b82f6;   /* Blue 500 */
+  
   /* Shadows - More Prominent for Dark Theme */
   --color-shadow-sm: rgba(0, 0, 0, 0.2);
   --color-shadow-md: rgba(0, 0, 0, 0.3);
