@@ -700,21 +700,32 @@ nav {
    Forms
    ============================================== */
 
+/* Apply contact-form group styles to all form groups for consistency with basic-web */
 .form-group {
   margin-bottom: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
 }
 
-.form-label {
+/* Apply contact-form label styles to all form labels for consistency with basic-web */
+.form-label,
+.form-group label {
   display: block;
   margin-bottom: var(--space-2);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
 }
 
+/* Apply contact-form styles to general form inputs for consistency with basic-web */
 .form-input,
-.form-textarea {
+.form-textarea,
+.form-group input,
+.form-group textarea {
   width: 100%;
-  padding: var(--space-4) var(--space-5);
+  padding: var(--space-4) var(--space-4);
   font-size: var(--font-size-base);
   font-family: inherit;
   line-height: var(--line-height-base);
@@ -723,21 +734,26 @@ nav {
   border: 2px solid var(--color-border);
   border-radius: var(--radius-lg);
   transition: all var(--transition-base);
-  min-height: 48px;
+  min-height: 52px;
   box-sizing: border-box;
 }
 
-/* Restore original basic-web hover styles for general form inputs */
+/* Apply contact-form hover styles to all form inputs for consistency with basic-web */
 .form-input:hover,
-.form-textarea:hover {
+.form-textarea:hover,
+.form-group input:hover,
+.form-group textarea:hover {
   border-color: var(--color-border-hover);
   background-color: var(--color-bg-input-focus);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px var(--color-shadow-sm);
 }
 
+/* Apply contact-form focus styles to all form inputs for consistency with basic-web */
 .form-input:focus,
-.form-textarea:focus {
+.form-textarea:focus,
+.form-group input:focus,
+.form-group textarea:focus {
   outline: none;
   border-color: var(--color-accent);
   background-color: var(--color-bg-input-focus);
@@ -747,7 +763,8 @@ nav {
 
 /* Remove placeholder styles to match basic-web - uses browser defaults */
 
-.form-textarea {
+.form-textarea,
+.form-group textarea {
   min-height: 120px;
   resize: vertical;
 }
@@ -1600,14 +1617,18 @@ dialog[open] {
     min-height: 48px;
   }
   
+  /* Apply mobile styles to all form inputs for consistency with basic-web */
   .contact-form .form-group input,
-  .contact-form .form-group textarea {
+  .contact-form .form-group textarea,
+  .form-group input,
+  .form-group textarea {
     padding: var(--space-3) var(--space-4);
     font-size: var(--font-size-base);
     min-height: 44px;
   }
   
-  .contact-form .form-group textarea {
+  .contact-form .form-group textarea,
+  .form-group textarea {
     min-height: 100px;
   }
   
