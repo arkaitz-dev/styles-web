@@ -745,12 +745,7 @@ nav {
   box-shadow: 0 0 0 3px var(--color-accent-light), 0 4px 12px var(--color-shadow-md);
 }
 
-/* Improved placeholder contrast */
-.form-input::placeholder,
-.form-textarea::placeholder {
-  color: var(--color-text-tertiary);
-  opacity: 0.8;
-}
+/* Remove placeholder styles to match basic-web - uses browser defaults */
 
 .form-textarea {
   min-height: 120px;
@@ -1281,6 +1276,41 @@ footer a {
 @media (hover: hover) and (pointer: fine) {
   footer a:hover {
     text-decoration: underline;
+  }
+}
+
+/* ==============================================
+   Dialog/Modal Styles
+   ============================================== */
+
+dialog {
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-card);
+  color: var(--color-text-primary);
+  box-shadow: 0 8px 24px var(--color-shadow-lg);
+  max-width: 400px;
+  width: 90%;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+dialog[open] {
+  animation: fadeInScale 0.3s ease;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
